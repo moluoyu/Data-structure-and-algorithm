@@ -21,7 +21,6 @@ void SelectionSort(int arr[],int n)
         {
             std::swap(arr[i],arr[min]);
         }
-
         
 
 
