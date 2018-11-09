@@ -5,8 +5,11 @@
  * @param str1 
  * @param str2 
  */
-
 #include<bits/stdc++.h>
+
+/*https://blog.csdn.net/chenxun_2010/article/details/21721419
+关于strcat()实现的几种版本
+*/
 void contact(char *str,const char *str1,const char *str2)//不加const也可以通过
 {
     int i,j;
