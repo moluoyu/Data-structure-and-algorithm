@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include <stack>gi
+#include <stack>
 //https://blog.csdn.net/fx677588/article/details/72357389  主要看图解
 using namespace std;
 typedef  struct Node
@@ -196,4 +196,59 @@ int main()
     // head  =  ReverseLinkedList(head);
     Print();
     return 0;
+}
+/**
+ * @brief  判断单链表是否成环，以及判断环的入口
+ * https://blog.csdn.net/wuzhekai1985/article/details/6725263
+ * 
+ */
+
+
+
+template <class T>
+/**
+ * @brief n个数里找出前m个数 top K 问题（https://blog.csdn.net/see__you__again/article/details/51713809）
+ * 思路：保存目前找到的最大k个数，每访问一个数，就与这k个数中的最小值比较，决定是否更新这k个数。
+ * 储存k个数的数据结构可采用：败者树、二叉查找树、最小堆
+ 如果这个大数组本身已经按从大到小有序，那么数组的前1万个元素就是结果；
+ 然后，可以假设这个大数组已经从大到小有序，并将前1万个元素放到结果数组；
+ 再次，事实上这结果数组里放的未必是最大的一万个，
+ 因此需要将前1万个数字后续的元素跟结果数组的最小的元素比较，
+ 如果所有后续的元素都比结果数组的最小元素还小，那结果数组就是想要的结果
+ 如果某一后续的元素比结果数组的最小元素大，那就用它替换结果数组里最小的数字；
+ 最后，遍历完大数组，得到的结果数组就是想要的结果了。
+ * @param BigArr   
+ * @param ResArr 结果存放的数组
+ */
+
+void solution_3(T BigArr[], T ResArr[])
+{
+    //取最前面的一万个
+    memcpy(ResArr, BigArr, sizeof(T) * RES_ARR_SIZE);
+    //标记是否发生过交换
+    bool bExchanged = true;
+    //遍历后续的元素
+    for (int i = RES_ARR_SIZE; i < BIG_ARR_SIZE; ++i)
+    {
+        int idx;
+        //如果上一轮发生过交换
+        if (bExchanged)
+        {
+            //找出ResArr中最小的元素
+            int j;
+            for (idx = 0, j = 1; j < RES_ARR_SIZE; ++j)
+            {
+                if (ResArr[idx] > ResArr[j])
+                    idx = j;
+            }
+        }
+        //这个后续元素比ResArr中最小的元素大，则替换。
+        if (BigArr[i] > ResArr[idx])
+        {
+            bExchanged = true;
+            ResArr[idx] = BigArr[i];
+        }
+        else
+            bExchanged = false;
+    }
 }
